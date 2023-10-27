@@ -51,7 +51,7 @@
     <div class="mb-3">
       <label class="inline-block mb-2">Confirm Password</label>
       <vee-field
-        name="confirm_password"
+        name="confirmPassword"
         type="password"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Confirm Password"
@@ -87,7 +87,7 @@
     <button
       type="submit"
       class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
-      :disabled="submit_disabled"
+      :disabled="submitDisabled"
     >
       Submit
     </button>
@@ -97,15 +97,15 @@
 <script>
 export default {
   name: 'AuthRegister',
-  props: ['submit_disabled'],
+  props: ['submitDisabled'],
   data() {
     return {
       schema: {
         name: 'required|min:3|max:100|alphaSpaces',
         email: 'required|min:3|max:100|email',
-        age: 'required|min_value:18|max_value:120|numeric',
+        age: 'required|minValue:18|maxValue:120|numeric',
         password: 'required|min:8',
-        confirm_password: 'required|passwords_mismatch:@password',
+        confirmPassword: 'required|passwordsMismatch:@password',
         country: 'required',
         tos: 'tos'
       },

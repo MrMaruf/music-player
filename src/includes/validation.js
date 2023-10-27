@@ -1,5 +1,5 @@
 import { Field as VeeField, Form as VeeForm, defineRule, ErrorMessage as VeeErrorMessage, configure } from "vee-validate";
-import { required, min, max, alpha_spaces as alphaSpaces, email, numeric, confirmed, min_value, max_value } from "@vee-validate/rules";
+import { required, min, max, alpha_spaces as alphaSpaces, email, numeric, confirmed, minValue as minValue, maxValue as maxValue } from "@vee-validate/rules";
 
 export default {
 	install(app) {
@@ -14,22 +14,22 @@ export default {
 		defineRule("alphaSpaces", alphaSpaces);
 		defineRule("email", email);
 		defineRule("numeric", numeric);
-		defineRule("min_value", min_value);
-		defineRule("max_value", max_value);
-		defineRule("passwords_mismatch", confirmed);
+		defineRule("minValue", minValue);
+		defineRule("maxValue", maxValue);
+		defineRule("passwordsMismatch", confirmed);
 
 		configure({
 			generateMessage: ctx => {
 				const messages = {
 					required: `This field is required.`,
-					min: `The field ${ctx.field} is too short.`,
-					max: `The field ${ctx.field} is too long.`,
+					min: `This field's value is too short.`,
+					max: `This field's value is too long.`,
 					alphaSpaces: `The field ${ctx.field} may only contain alphabetical characters and spaces.`,
-					email: `The field ${ctx.field} must be a valid email.`,
-					numeric: `The field ${ctx.field} may only contain numeric characters.`,
-					min_value: `The field ${ctx.field} is too low.`,
-					max_value: `The field ${ctx.field} is too high.`,
-					passwords_mismatch: `The passwords do not match.`,
+					email: `This field must be a valid email.`,
+					numeric: `This field may only contain numeric characters.`,
+					minValue: `This field's value is too low.`,
+					maxValue: `This field's value is too high.`,
+					passwordsMismatch: `The passwords do not match.`,
 					tos: `You must accept the Terms of Service.`,
 				};
 

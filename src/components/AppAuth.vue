@@ -60,16 +60,16 @@
           </ul>
           <div
             class="text-white text-center font-bold p-4 rounded mb-4"
-            v-if="reg_show_alert"
-            :class="reg_alert_variant"
+            v-if="showAlert"
+            :class="alertVariant"
           >
-            {{ reg_alert_msg }}
+            {{ alertMsg }}
           </div>
           <!-- Login Form -->
-          <auth-login v-show="tab === 'login'" />
+          <auth-login :submitDisabled="inSubmission" @submit="login" v-show="tab === 'login'" />
           <!-- Registration Form -->
           <auth-register
-            :submit_disabled="reg_in_submission"
+            :submitDisabled="inSubmission"
             @submit="register"
             v-show="tab === 'register'"
           />
@@ -94,10 +94,10 @@ export default {
   data() {
     return {
       tab: 'login',
-      reg_in_submission: false,
-      reg_show_alert: false,
-      reg_alert_variant: 'bg-blue-500',
-      reg_alert_msg: 'Please wait!'
+      inSubmission: false,
+      showAlert: false,
+      alertVariant: 'bg-blue-500',
+      alertMsg: 'Please wait!'
     }
   },
   methods: {
@@ -105,15 +105,26 @@ export default {
       this.modalStore.closeModal()
     },
     register(values) {
-      this.reg_in_submission = true
-      this.reg_show_alert = true
-      this.reg_alert_variant = 'bg-blue-500'
-      this.reg_alert_msg = 'Please wait!'
+      this.inSubmission = true
+      this.showAlert = true
+      this.alertVariant = 'bg-blue-500'
+      this.alertMsg = 'Please wait!'
       console.log(values)
 
-      this.reg_alert_variant = 'bg-green-500'
-      this.reg_alert_msg = 'Success!'
-      this.reg_in_submission = false
+      this.alertVariant = 'bg-green-500'
+      this.alertMsg = 'Success!'
+      this.inSubmission = false
+    },
+    login(values) {
+      this.inSubmission = true
+      this.showAlert = true
+      this.alertVariant = 'bg-blue-500'
+      this.alertMsg = 'Please wait! Logging in...'
+      console.log(values)
+
+      this.alertVariant = 'bg-green-500'
+      this.alertMsg = 'Success! Logged in!'
+      this.modalStore.closeModal()
     }
   },
   computed: {
