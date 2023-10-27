@@ -1,5 +1,5 @@
 <template>
-	<div class="fixed z-10 inset-0 overflow-y-auto hidden" id="modal">
+	<div class="fixed z-10 inset-0 overflow-y-auto" :class="[modalStore.isOpen ? 'hidden' : '']" id="modal">
 		<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center 
       sm:block sm:p-0">
 			<div class="fixed inset-0 transition-opacity">
@@ -18,7 +18,8 @@
 					<div class="flex justify-between items-center pb-4">
 						<p class="text-2xl font-bold">Your Account</p>
 						<!-- Modal Close Button -->
-						<div class="modal-close cursor-pointer z-50">
+						<div class="modal-close cursor-pointer z-50"
+							@click.prevent="modalStore.isOpen = !modalStore.isOpen">
 							<i class="fas fa-times"></i>
 						</div>
 					</div>
@@ -26,16 +27,21 @@
 					<!-- Tabs -->
 					<ul class="flex flex-wrap mb-4">
 						<li class="flex-auto text-center">
-							<a class="block rounded py-3 px-4 transition hover:text-white text-white
-                bg-blue-600" href="#">Login</a>
+							<a class="block rounded py-3 px-4 transition" :class="{
+								'hover:text-white text-white bg-blue-600': tab === 'login',
+								'hover:text-blue-600': tab === 'register'
+							}" href="#" @click.prevent="tab = 'login'">Login</a>
 						</li>
 						<li class="flex-auto text-center">
-							<a class="block rounded py-3 px-4 transition hover:text-blue-600" href="#">Register</a>
+							<a class="block rounded py-3 px-4 transition" :class="{
+								'hover:text-white text-white bg-blue-600': tab === 'register',
+								'hover:text-blue-600': tab === 'login'
+							}" href="#" @click.prevent="tab = 'register'">Register</a>
 						</li>
 					</ul>
 
 					<!-- Login Form -->
-					<form>
+					<form v-show="tab === 'login'">
 						<!-- Email -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Email</label>
@@ -54,35 +60,35 @@
 						</button>
 					</form>
 					<!-- Registration Form -->
-					<form>
+					<vee-form v-show="tab === 'register'">
 						<!-- Name -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Name</label>
-							<input type="text" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
+							<vee-field name="name" type="text" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
                   duration-500 focus:outline-none focus:border-black rounded" placeholder="Enter Name" />
 						</div>
 						<!-- Email -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Email</label>
-							<input type="email" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
+							<vee-field type="email" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
                   duration-500 focus:outline-none focus:border-black rounded" placeholder="Enter Email" />
 						</div>
 						<!-- Age -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Age</label>
-							<input type="number" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
+							<vee-field type="number" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
                   duration-500 focus:outline-none focus:border-black rounded" />
 						</div>
 						<!-- Password -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Password</label>
-							<input type="password" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
+							<vee-field type="password" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
                   duration-500 focus:outline-none focus:border-black rounded" placeholder="Password" />
 						</div>
 						<!-- Confirm Password -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Confirm Password</label>
-							<input type="password" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
+							<vee-field type="password" class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
                   duration-500 focus:outline-none focus:border-black rounded" placeholder="Confirm Password" />
 						</div>
 						<!-- Country -->
@@ -104,7 +110,7 @@
                 hover:bg-purple-700">
 							Submit
 						</button>
-					</form>
+					</vee-form>
 				</div>
 			</div>
 		</div>
@@ -112,18 +118,30 @@
 </template>
 
 <script>
+import { useModalStore } from '@/stores/modal';
+
 export default {
 	name: 'AppAuth',
+	setup() {
+
+		const modalStore = useModalStore();
+
+		return { modalStore };
+	},
 	data() {
 		return {
-			// Your data properties here
+			tab: "login",
 		}
 	},
 	methods: {
-		// Your methods here
+		closeModal() {
+			this.modalStore.closeModal();
+		}
 	},
 	computed: {
-		// Your computed properties here
+		hiddenClass() {
+			return this.modalStore.hiddenClass;
+		}
 	}
 }
 </script>
