@@ -1,5 +1,5 @@
 import { Field as VeeField, Form as VeeForm, defineRule, ErrorMessage as VeeErrorMessage, configure } from "vee-validate";
-import { required, min, max, alpha_spaces as alphaSpaces, email, numeric, confirmed, minValue as minValue, maxValue as maxValue } from "@vee-validate/rules";
+import { required, min, max, alpha_spaces as alphaSpaces, email, numeric, confirmed, min_value as minValue, max_value as maxValue } from "@vee-validate/rules";
 
 export default {
 	install(app) {
