@@ -86,8 +86,10 @@
       <ErrorMessage name="userType" class="text-red-600" />
     </div>
     <!-- TOS -->
-    <div class="mb-3 pl-6">
+    <div class="mb-3 pl-6" @click="toggleTOS">
       <vee-field
+        mode="eager"
+        id="tos-input"
         value="1"
         name="tos"
         type="checkbox"
@@ -127,11 +129,21 @@ export default {
         country: 'USA',
         userType: 'Listener'
       }
-    };
+    }
   },
   methods: {
     onSubmit(values) {
       this.$emit('submit', values)
+    },
+    toggleTOS(event) {
+      const target = event.target
+      const inputId = 'tos-input'
+      if (target.id === inputId) {
+        return
+      }
+      const tosContainer = event.currentTarget
+      const tosInput = tosContainer.children[0]
+      tosInput.click()
     }
   },
   emits: {
