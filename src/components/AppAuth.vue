@@ -54,7 +54,11 @@ import { useModalStore } from '@/stores/modal';
 import AuthRegister from '@/components/auth/AuthRegister.vue';
 import AuthLogin from '@/components/auth/AuthLogin.vue';
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from "firebase/auth";
 import { firebaseCollections } from "@/includes/firebase";
 import { addDoc } from "firebase/firestore";
 
@@ -100,15 +104,15 @@ export default {
         this.alertMsg = 'An unexpected error occured. Please try again later';
         return;
       }
-
+      const userObject = {
+        name: values.name,
+        email: values.email,
+        age: values.age,
+        country: values.country,
+        userType: values.userType
+      }
       try {
-        const docRef = await addDoc(firebaseCollections.users, {
-          name: values.name,
-          email: values.email,
-          age: values.age,
-          country: values.country,
-          userType: values.userType
-        });
+        const docRef = await addDoc(firebaseCollections.users, userObject);
         console.log("Document written with ID: ", docRef.id);
       } catch (e) {
         console.error("Error adding document: ", e);
@@ -119,13 +123,27 @@ export default {
       this.inSubmission = false
       console.log(userCredentials);
     },
-    login(values) {
+    async login(values) {
       this.inSubmission = true
       this.showAlert = true
       this.alertVariant = 'bg-blue-500'
       this.alertMsg = 'Please wait! Logging in...'
       console.log(values)
-
+      const auth = getAuth();
+      let result = null;
+      try {
+        result = await signInWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        )
+      } catch (error) {
+        console.log('Error logging in', error)
+        this.inSubmission = false;
+        this.alertVariant = "bg-red-500";
+        this.alertMsg = 'An unexpected error occured. Please try again later';
+        return;
+      }
       this.alertVariant = 'bg-green-500'
       this.alertMsg = 'Success! Logged in!'
       this.modalStore.closeModal()
