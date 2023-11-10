@@ -124,9 +124,10 @@ export default {
         tos: 'tos'
       },
       userData: {
-        country: 'USA'
+        country: 'USA',
+        userType: 'Listener'
       }
-    }
+    };
   },
   methods: {
     onSubmit(values) {
