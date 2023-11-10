@@ -6,15 +6,18 @@ export const useModalStore = defineStore('modal', {
 	}),
 	actions: {
 		openModal() {
-			this.isOpen = true
+			this.isOpen = true;
 		},
 		closeModal() {
-			this.isOpen = false
+			this.isOpen = false;
 		},
+		toggleModal() {
+			this.isOpen = !this.isOpen;
+		}
 	},
 	getters: {
 		hiddenClass(state) {
-			return state.isOpen === "true" ? "" : "hidden";
+			return state.isOpen === true ? "" : "hidden";
 		}
 	}
 })
