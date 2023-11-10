@@ -72,6 +72,19 @@
       </vee-field>
       <ErrorMessage name="country" class="text-red-600" />
     </div>
+    <!-- User Type -->
+    <div class="mb-3">
+      <label class="inline-block mb-2">You are ...</label>
+      <vee-field
+        as="select"
+        name="userType"
+        class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+      >
+        <option value="Listener">Listener</option>
+        <option value="Artist">Artist</option>
+      </vee-field>
+      <ErrorMessage name="userType" class="text-red-600" />
+    </div>
     <!-- TOS -->
     <div class="mb-3 pl-6">
       <vee-field
@@ -107,6 +120,7 @@ export default {
         password: 'required|min:8',
         confirmPassword: 'required|passwordsMismatch:@password',
         country: 'required',
+        userType: 'required',
         tos: 'tos'
       },
       userData: {
