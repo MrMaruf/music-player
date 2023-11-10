@@ -56,7 +56,7 @@
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Confirm Password"
       />
-      <ErrorMessage name="confirm_password" class="text-red-600" />
+      <ErrorMessage name="confirmPassword" class="text-red-600" />
     </div>
     <!-- Country -->
     <div class="mb-3">
