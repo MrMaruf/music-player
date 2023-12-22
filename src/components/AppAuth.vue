@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="fixed z-10 inset-0 overflow-y-auto"
-    :class="hiddenClass"
-    id="modal"
-  >
+  <div class="fixed z-10 inset-0 overflow-y-auto" :class="hiddenClass" id="modal">
     <div
       class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
@@ -23,10 +19,7 @@
           <div class="flex justify-between items-center pb-4">
             <p class="text-2xl font-bold">Your Account</p>
             <!-- Modal Close Button -->
-            <div
-              class="modal-close cursor-pointer z-50"
-              @click.prevent="closeModal"
-            >
+            <div class="modal-close cursor-pointer z-50" @click.prevent="closeModal">
               <i class="fas fa-times"></i>
             </div>
           </div>
@@ -88,8 +81,7 @@ import AuthLogin from '@/components/auth/AuthLogin.vue'
 
 export default {
   name: 'AppAuth',
-  setup() {
-  },
+  setup() {},
   data() {
     return {
       tab: 'login',
@@ -145,7 +137,11 @@ export default {
       }
       this.alertVariant = 'bg-green-500'
       this.alertMsg = 'Success! Logged in!'
-      this.closeModal()
+      setTimeout(() => {
+        this.inSubmission = false
+        this.showAlert = false
+        this.closeModal()
+      }, 1000)
     }
   },
   computed: {

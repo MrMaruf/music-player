@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile
@@ -36,9 +35,12 @@ export const useUserStore = defineStore('user', {
       this.isLoggedIn = true
     },
     async login(values) {
-      const auth = getAuth()
       await signInWithEmailAndPassword(auth, values.email, values.password)
       this.isLoggedIn = true
+    },
+    async logout() {
+      await auth.signOut()
+      this.isLoggedIn = false
     }
   }
 })
