@@ -6,7 +6,7 @@ import {
   updateProfile
 } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
-import { firebaseCollections } from '@/includes/firebase'
+import { firebaseCollections, auth } from '@/includes/firebase'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -14,7 +14,6 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     async register(values) {
-      const auth = getAuth()
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         values.email,
