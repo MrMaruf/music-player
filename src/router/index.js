@@ -15,8 +15,18 @@ const routes = [
   },
   {
     path: "/manage",
+    redirect: { name: 'manage' }
+  },
+  {
+    path: "/manage-music",
+    // alias: "/manage",
     component: () => import('@/views/ManageView.vue'),
     name: 'manage'
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'not-found',
+    redirect: { name: 'home' }
   }
 ];
 
