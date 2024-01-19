@@ -10,6 +10,10 @@ const routes = [
   {
     path: "/about",
     component: AboutView
+  },
+  {
+    path: "/manage",
+    component: () => import('@/views/ManageView.vue')
   }
 ];
 
