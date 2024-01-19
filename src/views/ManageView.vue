@@ -130,4 +130,16 @@
   </section>
 </template>
 
-<script></script>
+<script>
+export default {
+  name: 'manage',
+  beforeRouteEnter(to, from, next) {
+    console.log('beforeRouteEnter')
+    if (localStorage.getItem('token')) {
+      next()
+    } else {
+      next('/')
+    }
+  }
+}
+</script>

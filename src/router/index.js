@@ -21,7 +21,11 @@ const routes = [
     path: "/manage-music",
     // alias: "/manage",
     component: () => import('@/views/ManageView.vue'),
-    name: 'manage'
+    name: 'manage',
+    beforeEnter: (to, from, next) => {
+      console.log('beforeEnter', to, from)
+      next()
+    },
   },
   {
     path: '/:catchAll(.*)',
@@ -35,5 +39,10 @@ const router = createRouter({
   routes,
   linkExactActiveClass: "text-yellow-500",
 })
+
+// router.beforeEach((to, from, next) => {
+//   console.log('beforeEach', to, from)
+//   next()
+// })
 
 export default router
