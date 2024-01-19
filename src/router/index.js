@@ -5,21 +5,25 @@ import AboutView from '@/views/AboutView.vue'
 const routes = [
   {
     path: '/',
-    component: HomeView
+    component: HomeView,
+    name: 'home'
   },
   {
     path: "/about",
-    component: AboutView
+    component: AboutView,
+    name: 'about'
   },
   {
     path: "/manage",
-    component: () => import('@/views/ManageView.vue')
+    component: () => import('@/views/ManageView.vue'),
+    name: 'manage'
   }
 ];
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes
+  routes,
+  linkExactActiveClass: "text-yellow-500",
 })
 
 export default router
