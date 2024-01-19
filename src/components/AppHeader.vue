@@ -19,7 +19,7 @@
           <template v-else>
             <li>
               <!-- <a class="px-2 text-white" href="#" @click.prevent="toggleAuthModal">Logout</a> -->
-              <a class="px-2 text-white" href="#" @click.prevent="logout">Logout</a>
+              <a class="px-2 text-white" href="#" @click.prevent="onLogout">Logout</a>
             </li>
             <li>
               <router-link class="px-2 text-white" :to="{ name: 'manage' }">Manage</router-link>
@@ -43,7 +43,13 @@ export default {
   name: 'AppHeader',
   methods: {
     ...mapActions(useModalStore, ['toggleModal']),
-    ...mapActions(useUserStore, ['logout'])
+    ...mapActions(useUserStore, ['logout']),
+    onLogout() {
+      this.logout()
+      if (this.$route.name === 'manage') {
+        this.$router.push({ name: 'home' })
+      }
+    }
   },
   computed: {
     ...mapWritableState(useUserStore, ['isLoggedIn'])

@@ -131,11 +131,15 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/user'
+
 export default {
-  name: 'manage',
+  name: 'ManageView',
   beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter')
-    if (localStorage.getItem('token')) {
+    const store = useUserStore()
+
+    if (store.isLoggedIn) {
       next()
     } else {
       next('/')
