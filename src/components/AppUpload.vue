@@ -21,11 +21,13 @@
                 </div>
                 <hr class="my-6" />
                 <div v-for="upload in uploads" :key="upload.name" class="mb-4">
-                    <div class="font-bold text-sm">{{ upload.name }}</div>
+                    <div class="font-bold text-sm" :class="upload.textClass">
+                        <i :class="upload.icon"></i> {{ upload.name }}
+                    </div>
                     <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
                         <div
-                            class="transition-all progress-bar bg-blue-400"
-                            :class="{ 'bg-green-400': upload.currentProgress === 100 }"
+                            class="transition-all progress-bar"
+                            :class="upload.variant"
                             :style="{ width: `${upload.currentProgress}%` }"
                         ></div>
                     </div>
@@ -59,15 +61,34 @@ export default {
                 this.uploads.push({
                     name: file.name,
                     task,
-                    currentProgress: 0
+                    currentProgress: 0,
+                    variant: 'bg-blue-400',
+                    icon: 'fas fa-spinner fa-spin',
+                    textClass: ''
                 }) - 1
 
-            task.on('state_changed', (snapshot) => {
-                const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                const upload = this.uploads[uploadIndex]
-                upload.currentProgress = percentage
-                console.log(percentage)
-            })
+            task.on(
+                'state_changed',
+                (snapshot) => {
+                    const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    const upload = this.uploads[uploadIndex]
+                    upload.currentProgress = percentage
+                    console.log(percentage)
+                },
+                (error) => {
+                    console.log(error)
+                    const upload = this.uploads[uploadIndex]
+                    upload.variant = 'bg-red-400'
+                    upload.icon = 'fas fa-times'
+                    upload.textClass = 'text-red-400'
+                },
+                () => {
+                    const upload = this.uploads[uploadIndex]
+                    upload.variant = 'bg-green-400'
+                    upload.icon = 'fas fa-check'
+                    upload.textClass = 'text-green-400'
+                }
+            )
         },
         onDrag() {},
         onDragStart() {},
