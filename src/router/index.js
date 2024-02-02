@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
+import { useUserStore } from '@/stores/user'
 
 const routes = [
   {
@@ -19,13 +20,11 @@ const routes = [
   },
   {
     path: "/manage-music",
-    // alias: "/manage",
     component: () => import('@/views/ManageView.vue'),
     name: 'manage',
-    beforeEnter: (to, from, next) => {
-      console.log('beforeEnter', to, from)
-      next()
-    },
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/:catchAll(.*)',
@@ -40,9 +39,17 @@ const router = createRouter({
   linkExactActiveClass: "text-yellow-500",
 })
 
-// router.beforeEach((to, from, next) => {
-//   console.log('beforeEach', to, from)
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+  // console.log('beforeEach', to, from)
+  if (!to.meta.requiresAuth) {
+    return next();
+  }
+
+  const store = useUserStore();
+  if (store.isLoggedIn) {
+    return next();
+  }
+  next({ name: 'home' });
+})
 
 export default router
