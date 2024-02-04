@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { firebaseStorage } from '@/includes/firebase'
+import { firebaseStorage, auth } from '@/includes/firebase'
 import { ref, uploadBytesResumable } from 'firebase/storage'
 
 export default {
@@ -83,6 +83,10 @@ export default {
                     upload.textClass = 'text-red-400'
                 },
                 () => {
+                    const song = {
+                        uid: auth.currentUser.uid,
+                        displayName: auth.currentUser.displayName
+                    }
                     const upload = this.uploads[uploadIndex]
                     upload.variant = 'bg-green-400'
                     upload.icon = 'fas fa-check'
