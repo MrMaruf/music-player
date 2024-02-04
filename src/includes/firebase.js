@@ -18,7 +18,8 @@ const firebaseDB = getFirestore(firebaseApp)
 const firebaseStorage = getStorage(firebaseApp)
 
 const firebaseCollections = {
-  "users": collection(firebaseDB, "users")
+  "users": collection(firebaseDB, "users"),
+  "songs": collection(firebaseDB, "songs")
 }
 
 
