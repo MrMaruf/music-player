@@ -135,6 +135,11 @@ export default {
                 await this.upload(file)
             }
         }
+    },
+    beforeUnmount() {
+        this.uploads.forEach((upload) => {
+            upload.cancel()
+        })
     }
 }
 </script>
