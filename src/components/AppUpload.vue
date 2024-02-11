@@ -19,6 +19,7 @@
                 >
                     <h5>Drop your files here</h5>
                 </div>
+                <input type="file" multiple @change="onInputChange" />
                 <hr class="my-6" />
                 <div v-for="upload in uploads" :key="upload.name" class="mb-4">
                     <div class="font-bold text-sm" :class="upload.textClass">
@@ -122,6 +123,13 @@ export default {
         async onDrop(event) {
             this.isDragover = false
             const { files } = event.dataTransfer
+            await this.handleFiles(files)
+        },
+        async onInputChange(event) {
+            const { files } = event.target
+            await this.handleFiles(files)
+        },
+        async handleFiles(files) {
             const filesArray = [...files]
             for (const file of filesArray) {
                 await this.upload(file)
